@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#081321" />
+  <title>NeuroEdge | Wearable Seizure Monitor</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#" aria-label="NeuroEdge home"><span class="brand-mark">N<span>e</span></span><span>NEUROEDGE<small>WEARABLE MONITOR</small></span></a>
+      <div class="side-label">MONITORING</div>
+      <a class="nav-item active" href="#overview"><span>◫</span> Overview</a>
+      <a class="nav-item" href="#signals"><span>∿</span> EEG signals</a>
+      <a class="nav-item" href="#events"><span>◷</span> Event history</a>
+      <div class="side-label side-label-spaced">SYSTEM</div>
+      <a class="nav-item" href="#device"><span>⌁</span> Wearable device</a>
+      <a class="nav-item" href="#model"><span>⌘</span> Model information</a>
+      <div class="sidebar-bottom">
+        <div class="privacy-icon">◇</div>
+        <strong>On-device first</strong>
+        <p>Designed for low-latency monitoring and privacy-aware processing.</p>
+        <span class="version">PROTOTYPE UI · v0.1</span>
+      </div>
+    </aside>
+
+    <main class="main-content" id="overview">
+      <header class="topbar">
+        <div><div class="eyebrow">NEUROEDGE / PATIENT MONITOR</div><h1>Good morning<span class="period">.</span></h1><p class="subheading">Your brain activity at a glance.</p></div>
+        <div class="top-actions"><span class="demo-pill"><i></i> DEMO DATA</span><button class="icon-button" id="helpBtn" aria-label="Help">?</button><div class="avatar">P</div></div>
+      </header>
+
+      <section class="status-banner" id="device">
+        <div class="status-symbol"><span>⌁</span></div>
+        <div class="status-copy"><strong>Wearable simulator is active</strong><span id="deviceStatus">Streaming simulated EEG values · Not connected to a physical wristband</span></div>
+        <div class="status-right"><span class="live-dot"></span><span id="connectionText">SIMULATION</span><button class="text-button" id="connectBtn">Pause demo</button></div>
+      </section>
+
+      <section class="metric-grid" aria-label="Current monitoring metrics">
+        <article class="metric-card"><div class="metric-top"><span>SEIZURE RISK ESTIMATE</span><span class="metric-icon purple">⌁</span></div><div class="metric-value" id="riskValue">08<span>%</span></div><div class="metric-foot"><span class="risk-low" id="riskLabel">● Low estimated risk</span><span>Illustrative</span></div><div class="risk-track"><i id="riskBar"></i></div></article>
+        <article class="metric-card"><div class="metric-top"><span>EEG SIGNAL QUALITY</span><span class="metric-icon teal">∿</span></div><div class="metric-value" id="qualityValue">94<span>%</span></div><div class="metric-foot"><span class="positive">● Good signal</span><span>4 channels</span></div><div class="mini-bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></article>
+        <article class="metric-card"><div class="metric-top"><span>HEART RATE</span><span class="metric-icon coral">♡</span></div><div class="metric-value" id="heartValue">72<span class="unit">bpm</span></div><div class="metric-foot"><span class="muted">Wrist sensor placeholder</span><span>Live demo</span></div><div class="sparkline"><svg viewBox="0 0 240 30" preserveAspectRatio="none"><path d="M0 18 L12 16 L24 19 L36 9 L48 14 L60 12 L72 20 L84 17 L96 18 L108 6 L120 12 L132 15 L144 11 L156 20 L168 15 L180 16 L192 8 L204 13 L216 17 L228 10 L240 13"/></svg></div></article>
+        <article class="metric-card"><div class="metric-top"><span>MONITORING DURATION</span><span class="metric-icon amber">◷</span></div><div class="metric-value" id="durationValue">00:00<span class="unit">min</span></div><div class="metric-foot"><span class="muted">Current session</span><span id="sessionState">Running</span></div><div class="duration-line"><i></i></div></article>
+      </section>
+
+      <section class="content-grid">
+        <article class="panel signal-panel" id="signals">
+          <div class="panel-heading"><div><div class="eyebrow">LIVE SIGNAL VIEW</div><h2>EEG activity</h2></div><div class="signal-tools"><span class="live-tag"><i></i> LIVE</span><select id="channelSelect" aria-label="Select EEG channel"><option value="Fp1-F7">Fp1 – F7</option><option value="F7-T7">F7 – T7</option><option value="T7-P7">T7 – P7</option><option value="P7-O1">P7 – O1</option></select></div></div>
+          <div class="chart-wrap"><div class="chart-y-labels"><span>+100 μV</span><span>+50 μV</span><span>0 μV</span><span>-50 μV</span><span>-100 μV</span></div><canvas id="eegCanvas" aria-label="Illustrative EEG waveform"></canvas><div class="chart-x-labels"><span>−10 sec</span><span>−7.5 sec</span><span>−5 sec</span><span>−2.5 sec</span><span>NOW</span></div></div>
+          <div class="chart-legend"><span><i class="legend-line"></i> EEG waveform</span><span><i class="legend-dash"></i> Baseline</span><span class="chart-note">Illustrative signal · Not a diagnostic trace</span></div>
+        </article>
+
+        <article class="panel prediction-panel" id="model">
+          <div class="panel-heading"><div><div class="eyebrow">AI ANALYSIS</div><h2>Prediction status</h2></div><span class="model-chip">MODEL PLACEHOLDER</span></div>
+          <div class="prediction-orb" id="predictionOrb"><div class="orb-inner"><span id="orbPercent">08%</span><small>RISK SCORE</small></div></div>
+          <div class="prediction-state" id="predictionState">No elevated risk detected</div>
+          <p class="prediction-description" id="predictionDescription">The demo is showing a low illustrative risk score. Connect a validated model to display real predictions.</p>
+          <div class="prediction-divider"></div>
+          <div class="prediction-detail"><span>Prediction window</span><strong>Model-defined</strong></div>
+          <div class="prediction-detail"><span>Last model update</span><strong id="lastUpdate">Just now</strong></div>
+          <button class="outline-button" id="testAlertBtn">Preview seizure alert</button>
+        </article>
+      </section>
+
+      <section class="bottom-grid">
+        <article class="panel events-panel" id="events">
+          <div class="panel-heading"><div><div class="eyebrow">RECENT ACTIVITY</div><h2>Event timeline</h2></div><span class="muted small">This session</span></div>
+          <div class="timeline" id="eventList"><div class="timeline-row"><span class="timeline-dot teal-dot"></span><div><strong>Monitoring session started</strong><small>Just now · Device simulator</small></div><span class="event-status">INFO</span></div><div class="timeline-row"><span class="timeline-dot green-dot"></span><div><strong>Signal quality is good</strong><small>Just now · 4 channels available</small></div><span class="event-status">NORMAL</span></div></div>
+        </article>
+        <article class="panel device-panel">
+          <div class="panel-heading"><div><div class="eyebrow">HARDWARE STATUS</div><h2>Wristband sensors</h2></div><span class="device-badge">SIMULATED</span></div>
+          <div class="sensor-row"><span class="sensor-icon">∿</span><div><strong>EEG electrodes</strong><small>Signal stream</small></div><span class="sensor-state"><i></i> Demo</span></div>
+          <div class="sensor-row"><span class="sensor-icon">♡</span><div><strong>Pulse sensor</strong><small>Heart-rate input</small></div><span class="sensor-state"><i></i> Demo</span></div>
+          <div class="sensor-row"><span class="sensor-icon">⌖</span><div><strong>Motion sensor</strong><small>Accelerometer / gyroscope</small></div><span class="sensor-state"><i></i> Demo</span></div>
+          <div class="device-footer">Battery status <strong>— Not connected</strong></div>
+        </article>
+      </section>
+      <footer>NeuroEdge-IPL · Research prototype interface <span>Not intended for diagnosis or emergency response.</span></footer>
+    </main>
+  </div>
+
+  <div class="modal-backdrop" id="alertModal" role="dialog" aria-modal="true" aria-labelledby="alertTitle" hidden>
+    <div class="alert-modal">
+      <button class="modal-close" id="closeAlert" aria-label="Close alert">×</button>
+      <div class="alert-visual"><div class="alert-pulse">!</div><div class="alert-rings"></div></div>
+      <div class="eyebrow alert-eyebrow">NEUROEDGE · HIGH-PRIORITY ALERT</div>
+      <h2 id="alertTitle">Possible seizure activity detected</h2>
+      <p class="alert-lead">The model has flagged a high-risk pattern. This is an automated warning, not a confirmed seizure diagnosis.</p>
+      <div class="alert-score"><span>DEMO RISK SCORE</span><strong id="alertScore">87%</strong><span>Illustrative value</span></div>
+      <div class="guidance-title">Suggested safety guidance</div>
+      <div class="guidance-list">
+        <div><span class="guide-number">01</span><p><strong>Stay safe</strong><small>If possible, move away from sharp, hot, or hard objects.</small></p><span class="guide-icon">◇</span></div>
+        <div><span class="guide-number">02</span><p><strong>Alert a caregiver</strong><small>Ask someone nearby to stay with the person and monitor them.</small></p><span class="guide-icon">♧</span></div>
+        <div><span class="guide-number">03</span><p><strong>Time the episode</strong><small>Do not restrain the person or put anything in their mouth.</small></p><span class="guide-icon">◷</span></div>
+      </div>
+      <div class="emergency-note">If a seizure lasts 5 minutes or longer, repeats without recovery, causes injury or breathing difficulty, or this is a first seizure, seek emergency medical help.</div>
+      <button class="ack-button" id="ackAlert">Acknowledge alert</button>
+      <p class="modal-footnote">Prototype demonstration only · Contact the person's clinician for an individualized seizure action plan.</p>
+    </div>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>
